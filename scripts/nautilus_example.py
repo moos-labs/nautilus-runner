@@ -1,21 +1,21 @@
 #!/usr/bin/env python3
 # -------------------------------------------------------------------------------------------------
 #  Based on the NautilusTrader project's own example (LGPL-3.0):
-#  examples/backtest/fx_ema_cross_audusd_ticks.py at release tag v1.231.0
+#  examples/backtest/fx_ema_cross_audusd_ticks.py at release tag v1.221.0
 #  https://nautechsystems.io -- Copyright (C) 2015-2026 Nautech Systems Pty Ltd.
 # -------------------------------------------------------------------------------------------------
 """
-NautilusTrader official example backtest, run end-to-end (v1.231.0).
+NautilusTrader official example backtest, run end-to-end (v1.221.0).
 
 This is the project's own example ``fx_ema_cross_audusd_ticks.py`` from
-release v1.231.0 of the nautilus_trader GitHub repository, with only the
+release v1.221.0 of the nautilus_trader GitHub repository, with only the
 minimal adaptations needed to run it non-interactively from the pip
 package in CI:
 
 1. The interactive ``time.sleep(0.1)`` + ``input("Press Enter...")``
    pause in the original is removed (it would hang a CI runner forever).
 2. The project's own packaged test data (``truefx/audusd-ticks.csv`` and
-   ``short-term-interest.csv`` from ``tests/test_data`` at tag v1.231.0)
+   ``short-term-interest.csv`` from ``tests/test_data`` at tag v1.221.0)
    is downloaded up front into the exact local directory that
    ``TestDataProvider`` checks first. Without this, the provider falls
    back to pulling the same files through the GitHub API via fsspec,
@@ -61,7 +61,7 @@ from nautilus_trader.test_kit.providers import TestDataProvider
 from nautilus_trader.test_kit.providers import TestInstrumentProvider
 
 
-RELEASE_TAG = "v1.231.0"
+RELEASE_TAG = "v1.221.0"
 TEST_DATA_FILES = [
     "short-term-interest.csv",
     "truefx/audusd-ticks.csv",
@@ -105,6 +105,7 @@ if __name__ == "__main__":
     # Create a fill model (optional)
     fill_model = FillModel(
         prob_fill_on_limit=0.2,
+        prob_fill_on_stop=0.95,
         prob_slippage=0.5,
         random_seed=42,
     )
@@ -197,13 +198,13 @@ if __name__ == "__main__":
     summary = f"""# NautilusTrader — official example backtest result
 
 - **Example run:** the project's own `examples/backtest/fx_ema_cross_audusd_ticks.py`
-  at release tag **v1.231.0** (the installed `nautilus_trader` version), with the
+  at release tag **v1.221.0** (the installed `nautilus_trader` version), with the
   minimal CI adaptations documented in `scripts/nautilus_example.py`.
 - **Strategy:** the project's own example strategy `EMACross`
   (`nautilus_trader.examples.strategies.ema_cross`), fast EMA 10 / slow EMA 20,
   trade size 1,000,000, as configured in the official example.
 - **Data:** the project's own packaged test data — TrueFX AUD/USD quote ticks
-  (`tests/test_data/truefx/audusd-ticks.csv` at tag v1.231.0), loaded via
+  (`tests/test_data/truefx/audusd-ticks.csv` at tag v1.221.0), loaded via
   `TestDataProvider.read_csv_ticks` and `QuoteTickDataWrangler`, exactly as in
   the official example; plus the packaged `short-term-interest.csv` used by the
   example's FX rollover interest module.
